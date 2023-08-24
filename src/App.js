@@ -29,7 +29,6 @@ function App() {
         if (data.message) {
           alert("enter valid data")
         } else {
-          console.log(data.message);
           setIsloading(true)
           setWeatherData(data)
           setIsloading(false)
