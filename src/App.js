@@ -1,5 +1,5 @@
 import './App.css';
-import { useState, useCallback, memo } from 'react';
+import { useState, useCallback, memo, useEffect } from 'react';
 import { useFetch } from './hooks/UseFetch';
 import Form from './components/Form';
 import Weather from './components/Weather';
@@ -8,8 +8,8 @@ function App() {
 
   const [weatherData, setWeatherData] = useState()
   const [isLoading, setIsloading] = useState(false)
-  const [country, setCountry] = useState("")
-  const [city, setCity] = useState("")
+  const [country, setCountry] = useState("egypt")
+  const [city, setCity] = useState("cairo")
 
   const handleCityChange = useCallback((e) => {
     const value = e.target.value
@@ -20,6 +20,12 @@ function App() {
     const value = e.target.value
     setCountry(value)
   }, [country, setCountry])
+
+
+  useEffect(() => {
+    fetchWeatherData(city, country)
+  }, [])
+
 
   const fetchWeatherData = useCallback((city, country) => {
     if (!city || !country) {
@@ -39,13 +45,12 @@ function App() {
         }
       })
     }
-  }, [city, country])
+  }, [])
 
 
   if (isLoading) {
     return <div id="loading">|</div>
   }
-
   return (
 
     <div className="App">
