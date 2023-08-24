@@ -1,62 +1,49 @@
 import './App.css';
-import { useState, useCallback, memo, useEffect } from 'react';
+import { useCallback, memo, useEffect, useReducer } from 'react';
 import { useFetch } from './hooks/UseFetch';
 import Form from './components/Form';
 import Weather from './components/Weather';
+import { INITIAL_STATE, weatherReducer } from './reducers/weatherReducer';
 
 function App() {
 
-  const [weatherData, setWeatherData] = useState()
-  const [isLoading, setIsloading] = useState(false)
-  const [country, setCountry] = useState("egypt")
-  const [city, setCity] = useState("cairo")
+  const [state, dispatch] = useReducer(weatherReducer, INITIAL_STATE)
 
-  const handleCityChange = useCallback((e) => {
-    const value = e.target.value
-    setCity(value)
-  }, [city, setCity])
-
-  const handleCountryChange = useCallback((e) => {
-    const value = e.target.value
-    setCountry(value)
-  }, [country, setCountry])
-
+  const handlChange = useCallback((e) => {
+    dispatch({
+      type: "CHANGE_INPUT",
+      payload: { name: e.target.name, value: e.target.value }
+    })
+  })
 
   useEffect(() => {
-    fetchWeatherData(city, country)
+    fetchWeatherData(state.city, state.country)
   }, [])
 
-
-  const fetchWeatherData = useCallback((city, country) => {
-    if (!city || !country) {
+  const fetchWeatherData = () => {
+    if (!state.city || !state.country) {
       alert("fill all the required inputs")
     } else {
-      useFetch(city, country).then((data) => {
+      dispatch({ type: "FETCH_START" })
+      useFetch(state.city, state.country).then((data) => {
         if (data.message) {
-          alert("enter valid data")
-          setCity("")
-          setCountry("")
+          dispatch({ type: "FETCH_ERROR" })
         } else {
-          setIsloading(true)
-          setWeatherData(data)
-          setIsloading(false)
-          setCity("")
-          setCountry("")
+          dispatch({ type: "FETCH_SUCCESS", payload: data })
         }
       })
     }
-  }, [])
+  }
 
-
-  if (isLoading) {
+  if (state.isLoading) {
     return <div id="loading">|</div>
   }
   return (
 
     <div className="App">
 
-      <Form handleCityChange={handleCityChange} handleCountryChange={handleCountryChange} city={city} country={country} fetchWeatherData={fetchWeatherData} />
-      {weatherData && <Weather weatherData={weatherData} />}
+      <Form handlChange={handlChange} state={state} fetchWeatherData={fetchWeatherData} />
+      {state.weatherData ? <Weather state={state} /> : <h1>you have entered invalid data</h1>}
 
     </div>
   );

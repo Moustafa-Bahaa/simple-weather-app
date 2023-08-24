@@ -1,11 +1,11 @@
 import React, { memo } from 'react'
 
-const Form = ({handleCountryChange, handleCityChange, city, country, fetchWeatherData}) => {
+const Form = ({ handlChange, state, fetchWeatherData }) => {
   return (
     <div className='form-container'>
-            <input type='text' value={country} onChange={handleCountryChange} placeholder='Country' required/>
-            <input type='text' value={city}  onChange={handleCityChange} placeholder='City' required/>
-            <button onClick={()=>fetchWeatherData(city, country)}>Get Weather</button>
+      <input type='text' value={state.country} onChange={handlChange} placeholder='Country' required name='country' />
+      <input type='text' value={state.city} onChange={handlChange} placeholder='City' required name='city' />
+      <button onClick={() => fetchWeatherData(state.city, state.country)}>Get Weather</button>
     </div>
   )
 }
