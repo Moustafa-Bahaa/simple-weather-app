@@ -21,7 +21,7 @@ function App() {
     setCountry(value)
   }, [country, setCountry])
 
-  const fetchWeatherData = (city, country) => {
+  const fetchWeatherData = useCallback((city, country) => {
     if (!city || !country) {
       alert("fill all the required inputs")
     } else {
@@ -39,7 +39,7 @@ function App() {
         }
       })
     }
-  }
+  }, [city, country])
 
 
   if (isLoading) {
