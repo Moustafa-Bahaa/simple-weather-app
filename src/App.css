@@ -12,6 +12,11 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+body {
+  background-image: url("./assets/bg.jpg");
+  background-size: cover;
+  text-align: center;
+}
 
 .App-header {
   background-color: #282c34;
@@ -35,4 +40,89 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#loading {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid #ffc107;
+  border-radius: 50%;
+  border-top-color: #ffc107;
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+  color: #ffc107;
+}
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+/******** form styles*********/
+.form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+}
+
+.form-container input {
+  padding: 10px;
+  margin: 0 15px;
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid whitesmoke;
+  outline: none;
+}
+.form-container input:focus {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.form-container input {
+  color: white !important;
+}
+
+.form-container button {
+  padding: 12px;
+  outline: none;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  padding: 7px 16px;
+  min-height: 36px;
+  min-width: 36px;
+  color: black;
+  background: #ffc107;
+  border-radius: 4px;
+  font-weight: 500;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  margin: 0 5px;
+}
+
+/* weather styles */
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.weather-container img {
+  width: 300px;
+}
+.additional-info {
+  display: flex;
+}
+.additional-info h3 {
+  margin: 20px;
 }
